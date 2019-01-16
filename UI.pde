@@ -1,14 +1,29 @@
+
 void startScreenUI() {
   cam.beginHUD();
   background(0, 100, 100);
-  textAlign(CENTER);
+  textAlign(CENTER, CENTER);
   textSize(30);
   text("Press the ENTER key to begin", width/2, height*0.3);
   text("Press the \"i\" key to see the instructions.", width/2, height*0.75);
   image(startScreenAsteroid, width/2, height/2);
+  rectMode(CENTER);
+  noStroke();
+  rect(width/2, height*0.45, singlePlayerButtonWidth, singlePlayerButtonHeight);
+  //ellipse((width/2)+(singlePlayerButtonWidth/2), height*0.45, singlePlayerButtonHeight, singlePlayerButtonHeight);
+  //ellipse((width/2)-(singlePlayerButtonWidth/2), height*0.45, singlePlayerButtonHeight, singlePlayerButtonHeight);
+  if ((mouseX > (width/2)/) || (mouseX) || ()) {
+    
+  }
+    rect(width/2, height*0.55, singlePlayerButtonWidth, singlePlayerButtonHeight);
+  //ellipse((width/2)+(singlePlayerButtonWidth/2), height*0.55, singlePlayerButtonHeight, singlePlayerButtonHeight);
+  //ellipse((width/2)-(singlePlayerButtonWidth/2), height*0.55, singlePlayerButtonHeight, singlePlayerButtonHeight);
+
+  fill(0);
+  text("Single Player", width/2, (height*0.45)-4);
+  text("COOP - Duos", width/2, (height*0.55)-4);
 
   //key controls for this is in the controls tab
-
   cam.endHUD();
 }
 
@@ -47,6 +62,7 @@ void HUD() {
 
   cam.beginHUD();
   fill(255, 0, 0);
+  rectMode(CORNER);
   rect(0, 0, player1.health, 12);
   fill(100, 100, 100);
   rect(0, 12, 600, topBannerHeight);
@@ -71,6 +87,18 @@ void pauseScreen() {
   fill(0);
   text("GAME PAUSED", width/2, height*0.3);
   text("Press the p key to resume", width/2, height*0.6);
+
+  cam.endHUD();
+}
+
+void shopScreen() {
+  cam.beginHUD();
+  background(255, 215, 0, 240);
+  textAlign(CENTER);
+  textSize(30);
+  fill(0);
+  text("Welcome to the International Space Station \nMobile Shop!", width/2, height*0.1);
+  text("To RESUME: Pess the 'b' key again", width/2, height*0.9);
 
   cam.endHUD();
 }

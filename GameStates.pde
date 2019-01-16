@@ -45,7 +45,7 @@ void currentGameState() {
   } else if (gameState == 1) {
     runGame();
   } else if (gameState == 2) {
-    
+    shopScreen();
   } else if (gameState == 3) {
     pauseScreen();
   } else if (gameState == 4) {

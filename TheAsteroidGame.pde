@@ -6,6 +6,7 @@ import ddf.minim.spi.*;
 import ddf.minim.ugens.*;
 
 import peasy.*;
+import controlP5.*;
 
 PeasyCam cam;
 Minim minim;
@@ -38,6 +39,9 @@ float shipToMainDistance;
 ArrayList<Explosion> explosions = new ArrayList<Explosion>(); //need this to hold all explosions
 PImage[] explosionImages = new PImage[8]; //holds the images of the explosion
 PVector exSize = new PVector(60, 60); //how big of an explosion
+
+float singlePlayerButtonWidth = 200;
+float singlePlayerButtonHeight = 50;
 
 void setup() {
   size(800, 800, P3D);
