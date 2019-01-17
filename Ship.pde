@@ -43,6 +43,8 @@ class Ship {
 
   PVector midPoint = new PVector(width/2, height/2, 0); //For PeasyCam
 
+  boolean shieldActive = false;
+
   Ship(float _r, float _g, float _b, PVector _initPos) {
     sColR = _r;
     sColG = _g;
@@ -60,7 +62,7 @@ class Ship {
       tSizes[i] = startSize;
     }
 
-    new Asteroid(main, new PVector(random(300, 500), random(300, 500)));
+    //new Asteroid(main, new PVector(random(300, 500), random(300, 500))); //incorrect spot
   }
 
   boolean detect(PVector pos1, PVector pos2, float rad) {
@@ -72,23 +74,21 @@ class Ship {
   PVector v;
 
   void bulletControl() {
-    try {
-      for (int i = 0; i < bPos.size(); i++) {
+    for (int i = 0; i < bPos.size(); i++) {
 
-        p = bPos.get(i);
-        v = bVel.get(i);
-        p.add(v);
-        noStroke();
-        pushMatrix();
-        fill(255, 0, 0);
-        translate(p.x, p.y, p.z);
-        sphere(bulletSize);
-        popMatrix();
-        //detects if the bullet is outside the screen
-        if (detect(p, new PVector(width/2, height/2), width)) {
-          bPos.remove(p);
-          bVel.remove(v);
-        }
+      p = bPos.get(i);
+      v = bVel.get(i);
+      p.add(v);
+      noStroke();
+      pushMatrix();
+      fill(255, 0, 0);
+      translate(p.x, p.y, p.z);
+      sphere(bulletSize);
+      popMatrix();
+      //detects if the bullet is outside the screen
+      if (detect(p, new PVector(width/2, height/2), width)) {
+        bPos.remove(p);
+        bVel.remove(v);
       }
 
       if (detectHit(asteroids.get(0).pos, p, asteroids.get(0).mass*2, bulletSize)) {
@@ -98,9 +98,6 @@ class Ship {
         PVector randomLocation = new PVector(random(200, 600), random(200, 600));
         new Asteroid(main, randomLocation);
       }
-    } 
-    catch(Exception e) {
-      e.getStackTrace();
     }
   }
 
@@ -128,19 +125,46 @@ class Ship {
           bVel.remove(i);
           currentScore += 5;
           new Asteroid(main, new PVector(random(0, 1500), random(0, 1500)));
+
           break;
         }
       }
     }
   }
 
+  void pickupItemsHitDetection() {
+    if (detectHit(money.pos, sPos, money.size, 5)) {
+      currentMoney += 5;
+      money.pos = new PVector(random(-200, 1000), random(-200, 1000));
+    }
+  }
+
   void shipHitDetection() {
     for (int i = 0; i < asteroids.size(); i++) {
       if (detectHit(asteroids.get(i).pos, sPos, asteroids.get(i).siz*0.7, shipSizeW)) {
-        health -= (width/5);
-        resetShip();
-        print(health);
-        break;
+        if (shieldActive) {
+          if (i == 0) { //hit asteroid with shield
+            resetShip();
+            shieldActive = false;
+          } else {
+            explosions.add(new Explosion(asteroids.get(i).pos, exSize, explosions, explosionImages, 5)); 
+            asteroids.remove(i);
+            shieldActive = false;
+            break;
+          }
+        } else {
+          if (i == 0) { //if hit center asteroid with the shield
+            resetShip();
+            health -= (width/5);
+          } else {
+            print("yes");
+            health -= (width/5);
+            resetShip();
+            explosions.add(new Explosion(asteroids.get(i).pos, exSize, explosions, explosionImages, 5)); 
+            asteroids.remove(i);
+            break;
+          }
+        }
       }
     }
   }
@@ -220,13 +244,13 @@ class Ship {
   void cameraZoom() {
     shipToMainDistance = PVector.dist(sPos, main.pos);
     //ship2ToMainDistance = PVector.dist(player2.sPos, main.pos);
-    println(shipToMainDistance);
+    //println(shipToMainDistance);
     if (shipToMainDistance < 300) {
       //println(frameCount);
       cam.lookAt(main.pos.x, main.pos.y, main.pos.z, 600, 50);
     } else if (shipToMainDistance > 700) {
       cam.lookAt(main.pos.x, main.pos.y, main.pos.z, 1400, 50);
-      println(frameCount);
+      //println(frameCount);
     } else {
       cam.lookAt(main.pos.x, main.pos.y, main.pos.z, shipToMainDistance*2, 50);
     }
@@ -243,9 +267,53 @@ class Ship {
       sPos.y = 1200;
     }
   }
-  
+
   void stimShot() {
     health += 100;
+    if (health <= 800) {
+      health = 800;
+    }
+    powerUp = 0;
+  }
+
+  void bigBullets() {
+    if (bulletSize == 5) {
+      startTimer = millis();
+    }
+
+    bulletSize = 10;
+
+    if (millis() - startTimer < 20000) {
+      bulletSize = 5;
+    }
+    if (bulletSize == 5) {
+      powerUp = 0;
+    }
+  }
+
+  void tripleShoot() {
+    for (int i = -1; i < 2; i ++) {
+      //bullet starting position
+      bPos.add(new PVector(sPos.x, sPos.y, sPos.z));
+
+      //bullet's velocity and direction
+      PVector v1 = new PVector(sDir.x, sDir.y, sDir.z).mult(bulletSpeed);
+      v1.rotate(PI/.1+i*50);
+      bVel.add(v1);
+    }
+    powerUp = 0;
+  }
+
+  void shield() {
+    startTimer = millis();
+
+    if (millis() - startTimer < 15000) {
+      powerUp = 0;
+    } else {
+      fill(255, 255, 0, 100);
+      noStroke();
+      ellipse(sPos.x, sPos.y, shipSizeW+10, shipSizeW+10);
+    }
   }
 
   void update() {
@@ -256,6 +324,7 @@ class Ship {
     cameraZoom();
     asteroidHitDetection();
     shipHitDetection();
+    pickupItemsHitDetection();
     //controls();
   }
 }

@@ -5,6 +5,7 @@ void runGame() {
   player1.update();
   player2.update();
   updateAsteroid();
+  money.update();
 
   if (player1.health <= 0) {
     gameOver = true;

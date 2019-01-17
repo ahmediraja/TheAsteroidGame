@@ -17,8 +17,7 @@ class PickupItem {
   
   void update() {
     fill(255);
-    stroke(255);
-    strokeWeight(2);
+    noStroke();
     ellipse(pos.x, pos.y, size, size);
     image(img, pos.x, pos.y, size, size);
   }

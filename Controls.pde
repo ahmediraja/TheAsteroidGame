@@ -61,15 +61,22 @@ void keyPressed() {
 
   //shop controls
   if (gameState == 2) {
-    if (key == '1') {
+    switch (powerUp) {
+    case 0:
       
-      
-    } else if (key == '2') {
-      
-      
+    case 1:
+      player1.stimShot();
+      player2.stimShot();
+    case 2:
+      player1.bigBullets();
+      player2.bigBullets();
+    case 3:
+      player1.tripleShoot();
+      player2.tripleShoot();
+    case 4:
+      player1.shield();
+      player2.shield();
     }
-    
-    
   }
   if (key == 'b') {
     if (gameState == 1) {
@@ -79,7 +86,12 @@ void keyPressed() {
     }
   }
   
-
+  
+  //cheat: ez money
+  if(keyCode == 89) {
+    currentMoney += 5;
+    println("ez money");
+  }
 }
 
 void keyReleased() { //Better control for ship (multiple keys at once without confusing keys for others)
@@ -116,7 +128,6 @@ void mousePressed() {
   //for testing purposes
   if (mouseButton == LEFT) {
     if (gameState == 0) {
-      
     } else if (gameState == 1) {
       PVector mouse = new PVector(mouseX, mouseY, 0);
       new Asteroid(main, mouse);

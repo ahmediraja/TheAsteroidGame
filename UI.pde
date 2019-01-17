@@ -1,9 +1,9 @@
 boolean buttonHit(float rBorder, float lBorder, float tBorder, float bBorder) {
   if (mouseX < rBorder && mouseX > lBorder && mouseY < bBorder && mouseY > tBorder) {
-    println("yepper");
+    //println("yepper");
     return true;
   } else {
-    println(mouseX + "........" + mouseY);
+    //println(mouseX + "........" + mouseY);
     //println(rBorder + "....." + lBorder + "....." + bBorder + "....." + tBorder);
     return false;
   }
@@ -29,12 +29,12 @@ void startScreenUI() {
     fill(b_unselectedColor);
     b_singlePlayerHit = true; //single player
     b_multiPlayerHit = false;
-    println("hit a");
+    //println("hit a");
   } else if (buttonHit(500, 300, 490, 440)) {
     fill(b_unselectedColor);
     b_singlePlayerHit = false; //multi-player
     b_multiPlayerHit = true;
-    println("hit b");
+    //println("hit b");
   } else {
     fill(b_unselectedColor);
     //println("nah");
@@ -95,6 +95,8 @@ void HUD() {
   fill(255, 0, 0);
   rectMode(CORNER);
   rect(0, 0, player1.health, 12);
+  fill(0, 0, 255);
+  rect(0, height-12, player2.health, 12);
   fill(100, 100, 100);
   rect(0, 12, 600, topBannerHeight);
   ellipse(600, 12+(topBannerHeight/2), topBannerHeight, topBannerHeight);
@@ -104,6 +106,10 @@ void HUD() {
   text("FPS: ", 30, 40);
   text(frameRate, 90, 40);
   text("Score: " + currentScore, 200, 40);
+  
+  //money display
+  textAlign(RIGHT);
+  text("Money: $" + (int)currentMoney, 600, 40);
 
 
 
@@ -139,13 +145,11 @@ void shopScreen() {
   text("2:", width*0.15, height*0.4);
   text("3:", width*0.15, height*0.5);
   text("4:", width*0.15, height*0.6);
-  text("5:", width*0.15, height*0.7);
   
   text("Stim Shot (Increases health by 100HP) [$20]", width*0.2, height*0.3);
   text("Bigger Bullets (Doubles the size of each bullet) [$27]", width*0.2, height*0.4);
   text("3 Way Shot (Shoots 3 bullets in different directions) [$30]", width*0.2, height*0.5);
-  text("The FLASH (Doubles the speed of the ship(s)) [$40]", width*0.2, height*0.6);
-  text("Shield (Places a shield over the ship for 15 secs) [$40]", width*0.2, height*0.7);
+  text("Shield (Places a shield over the ship for 15 secs) [$40]", width*0.2, height*0.6);
   cam.endHUD();
 }
 
@@ -165,6 +169,9 @@ void endScreen() {
     player1.health = width;
     player1.resetShip();
     currentScore = 0;
+    for (int i = 1; i < asteroids.size(); i++) {
+      asteroids.remove(i);
+    }
     gameOver = false;
     gameState = 1;
   }

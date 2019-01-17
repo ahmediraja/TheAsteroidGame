@@ -10,6 +10,7 @@ import peasy.*;
 PeasyCam cam;
 Minim minim;
 PImage startScreenAsteroid;
+PImage moneyImg;
 
 boolean multiplayer = true;
 Ship player1;
@@ -29,9 +30,12 @@ int gameState = 0;
 int currentScore = 0;
 boolean gameOver = false;
 
+float currentMoney = 0;
+
 float shipToMainDistance;
 //float ship2ToMainDistance;
-
+PVector player1InitPos = new PVector(200, 200);
+PVector player2InitPos = new PVector(600, 600);
 
 ArrayList<Explosion> explosions = new ArrayList<Explosion>(); //need this to hold all explosions
 PImage[] explosionImages = new PImage[8]; //holds the images of the explosion
@@ -46,6 +50,14 @@ boolean b_multiPlayerHit = false;
 color b_unselectedColor = color(0, 255, 255);
 color b_selectedColor = color(255, 215, 0);
 
+//for pickup items
+PickupItem money;
+PVector moneyPos = new PVector(random(-200, 1000), random(-200, 1000));
+
+int powerUp = 0;
+
+long startTimer;
+
 void setup() {
   size(800, 800, P3D);
   frameRate(80);
@@ -56,9 +68,9 @@ void setup() {
 
 void init() {
   center = new PVector(width/2, height/2, 0);
-  player1 = new Ship(255, 0, 0, player1.initPos);
+  player1 = new Ship(255, 0, 0, player1InitPos);
   if (multiplayer) {
-    player2 = new Ship(0, 0, 255, player2.initPos);
+    player2 = new Ship(0, 0, 255, player2InitPos);
   }
   cam = new PeasyCam(this, player1.midPoint.x, player1.midPoint.y, 0, 500);
 
@@ -66,12 +78,18 @@ void init() {
   initAsteroids();
   initStars();
   initExplosion();
+  initPickupItems();
   player1.initShip();
   if (multiplayer) {
     player2.initShip();
   }
   imageMode(CENTER);
   startScreenAsteroid = loadImage("asteroid-icon.png");
+}
+
+void initPickupItems() {
+  moneyImg = loadImage("dollar.png");
+  money = new PickupItem(moneyPos, 20, moneyImg);
 }
 
 void initSound() {
@@ -140,6 +158,6 @@ void draw() {
   currentGameState();
 
   starBackground(); //stars should exist on start and end screen as well
-
+  //println(player1.health + ".........." + player2.health);
   //println(player1.sPos); //show ship position
 }
