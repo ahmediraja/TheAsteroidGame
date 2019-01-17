@@ -1,7 +1,18 @@
+boolean buttonHit(float rBorder, float lBorder, float tBorder, float bBorder) {
+  if (mouseX < rBorder && mouseX > lBorder && mouseY < bBorder && mouseY > tBorder) {
+    println("yepper");
+    return true;
+  } else {
+    println(mouseX + "........" + mouseY);
+    //println(rBorder + "....." + lBorder + "....." + bBorder + "....." + tBorder);
+    return false;
+  }
+}
 
 void startScreenUI() {
   cam.beginHUD();
   background(0, 100, 100);
+  fill(0, 255, 255);
   textAlign(CENTER, CENTER);
   textSize(30);
   text("Press the ENTER key to begin", width/2, height*0.3);
@@ -9,21 +20,41 @@ void startScreenUI() {
   image(startScreenAsteroid, width/2, height/2);
   rectMode(CENTER);
   noStroke();
-  rect(width/2, height*0.45, singlePlayerButtonWidth, singlePlayerButtonHeight);
+
+
+
+  //key controls for this is in the controls tab
+  if (buttonHit(500, 300, 390, 340)) {
+    //mouseX > 500 && mouseX < 300 && mouseY > 390 && mouseY < 340
+    fill(b_unselectedColor);
+    b_singlePlayerHit = true; //single player
+    b_multiPlayerHit = false;
+    println("hit a");
+  } else if (buttonHit(500, 300, 490, 440)) {
+    fill(b_unselectedColor);
+    b_singlePlayerHit = false; //multi-player
+    b_multiPlayerHit = true;
+    println("hit b");
+  } else {
+    fill(b_unselectedColor);
+    //println("nah");
+  }
+
+  rect(width/2, height*0.45, singlePlayerButtonWidth, singlePlayerButtonHeight, 10);
   //ellipse((width/2)+(singlePlayerButtonWidth/2), height*0.45, singlePlayerButtonHeight, singlePlayerButtonHeight);
   //ellipse((width/2)-(singlePlayerButtonWidth/2), height*0.45, singlePlayerButtonHeight, singlePlayerButtonHeight);
-  if ((mouseX > (width/2)/) || (mouseX) || ()) {
-    
-  }
-    rect(width/2, height*0.55, singlePlayerButtonWidth, singlePlayerButtonHeight);
+
+  rect(width/2, height*0.55, singlePlayerButtonWidth, singlePlayerButtonHeight, 10);
+
   //ellipse((width/2)+(singlePlayerButtonWidth/2), height*0.55, singlePlayerButtonHeight, singlePlayerButtonHeight);
   //ellipse((width/2)-(singlePlayerButtonWidth/2), height*0.55, singlePlayerButtonHeight, singlePlayerButtonHeight);
 
   fill(0);
+  textSize(20);
   text("Single Player", width/2, (height*0.45)-4);
-  text("COOP - Duos", width/2, (height*0.55)-4);
+  text("CO-OP / Duos", width/2, (height*0.55)-4);
 
-  //key controls for this is in the controls tab
+
   cam.endHUD();
 }
 
@@ -69,6 +100,7 @@ void HUD() {
   ellipse(600, 12+(topBannerHeight/2), topBannerHeight, topBannerHeight);
   fill(255);
   textSize(20);
+  textAlign(CENTER, CORNER);
   text("FPS: ", 30, 40);
   text(frameRate, 90, 40);
   text("Score: " + currentScore, 200, 40);
@@ -98,8 +130,22 @@ void shopScreen() {
   textSize(30);
   fill(0);
   text("Welcome to the International Space Station \nMobile Shop!", width/2, height*0.1);
-  text("To RESUME: Pess the 'b' key again", width/2, height*0.9);
-
+  text("To RESUME: Press the 'b' key again", width/2, height*0.9);
+  textSize(20);
+  text("Press the number that corresponds to the item you'd like to buy", width/2, height*0.2);
+  //items list
+  textAlign(LEFT);
+  text("1:", width*0.15, height*0.3);
+  text("2:", width*0.15, height*0.4);
+  text("3:", width*0.15, height*0.5);
+  text("4:", width*0.15, height*0.6);
+  text("5:", width*0.15, height*0.7);
+  
+  text("Stim Shot (Increases health by 100HP) [$20]", width*0.2, height*0.3);
+  text("Bigger Bullets (Doubles the size of each bullet) [$27]", width*0.2, height*0.4);
+  text("3 Way Shot (Shoots 3 bullets in different directions) [$30]", width*0.2, height*0.5);
+  text("The FLASH (Doubles the speed of the ship(s)) [$40]", width*0.2, height*0.6);
+  text("Shield (Places a shield over the ship for 15 secs) [$40]", width*0.2, height*0.7);
   cam.endHUD();
 }
 

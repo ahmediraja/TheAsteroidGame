@@ -6,7 +6,6 @@ import ddf.minim.spi.*;
 import ddf.minim.ugens.*;
 
 import peasy.*;
-import controlP5.*;
 
 PeasyCam cam;
 Minim minim;
@@ -15,8 +14,6 @@ PImage startScreenAsteroid;
 boolean multiplayer = true;
 Ship player1;
 Ship player2;
-PVector player1InitPos = new PVector(600, 600, 0);
-PVector player2InitPos = new PVector(200, 200, 0);
 
 //sound variables
 AudioSample bulletSound;
@@ -43,6 +40,12 @@ PVector exSize = new PVector(60, 60); //how big of an explosion
 float singlePlayerButtonWidth = 200;
 float singlePlayerButtonHeight = 50;
 
+//for UI
+boolean b_singlePlayerHit = false;
+boolean b_multiPlayerHit = false;
+color b_unselectedColor = color(0, 255, 255);
+color b_selectedColor = color(255, 215, 0);
+
 void setup() {
   size(800, 800, P3D);
   frameRate(80);
@@ -53,9 +56,9 @@ void setup() {
 
 void init() {
   center = new PVector(width/2, height/2, 0);
-  player1 = new Ship(255, 0, 0, player1InitPos, 38, 39, 37, 188);
+  player1 = new Ship(255, 0, 0, player1.initPos);
   if (multiplayer) {
-    player2 = new Ship(0, 0, 255, player2InitPos, 87, 68, 65, 81);
+    player2 = new Ship(0, 0, 255, player2.initPos);
   }
   cam = new PeasyCam(this, player1.midPoint.x, player1.midPoint.y, 0, 500);
 

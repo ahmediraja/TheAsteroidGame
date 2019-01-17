@@ -21,10 +21,6 @@ class Ship {
   float health = width;
   float sColR, sColG, sColB;
   PVector initPos;
-  int thrustKey;
-  int rightKey;
-  int leftKey;
-  int shootKey;
 
   //variables for the tracers(animation)
   float startSize = 30; // this is the tracers starting size
@@ -47,15 +43,11 @@ class Ship {
 
   PVector midPoint = new PVector(width/2, height/2, 0); //For PeasyCam
 
-  Ship(float _r, float _g, float _b, PVector _initPos, int _thrustKey, int _rightKey, int _leftKey, int _shootKey) {
+  Ship(float _r, float _g, float _b, PVector _initPos) {
     sColR = _r;
     sColG = _g;
     sColB = _b;
     initPos = _initPos;
-    thrustKey = _thrustKey;
-    rightKey = _rightKey;
-    leftKey = _leftKey;
-    shootKey = _shootKey;
   }
 
   void initShip() {
@@ -251,43 +243,9 @@ class Ship {
       sPos.y = 1200;
     }
   }
-
-  void controls() {
-    /*
-    if (keyPressed && keyCode == leftKey) {
-      leftBool = true;
-    } else {
-      leftBool = false;
-    }
-    if (keyPressed && keyCode == rightKey) {
-      rightBool = true;
-    } else {
-      rightBool = false;
-    }
-    if (keyPressed && keyCode == thrustKey) {
-      thrustBool = true;
-    } else {
-      thrustBool = false;
-    }
-    if (keyPressed && keyCode == shootKey) {
-      shoot();
-    }
-    */
-    
-    if (keyPressed && keyCode == leftKey) {
-      leftBool = true;
-    } else if (keyPressed && keyCode == rightKey) {
-      rightBool = true;
-    } else if (keyPressed && keyCode == thrustKey) {
-      thrustBool = true;
-    } else {
-      thrustBool = false;
-      rightBool = false;
-      leftBool = false;
-    }
-    if (keyPressed && keyCode == shootKey) {
-      shoot();
-    }
+  
+  void stimShot() {
+    health += 100;
   }
 
   void update() {

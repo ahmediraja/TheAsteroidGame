@@ -59,7 +59,18 @@ void keyPressed() {
     }
   }
 
-  //pause controls
+  //shop controls
+  if (gameState == 2) {
+    if (key == '1') {
+      
+      
+    } else if (key == '2') {
+      
+      
+    }
+    
+    
+  }
   if (key == 'b') {
     if (gameState == 1) {
       gameState = 2;
@@ -67,6 +78,8 @@ void keyPressed() {
       gameState = 1;
     }
   }
+  
+
 }
 
 void keyReleased() { //Better control for ship (multiple keys at once without confusing keys for others)
@@ -103,10 +116,7 @@ void mousePressed() {
   //for testing purposes
   if (mouseButton == LEFT) {
     if (gameState == 0) {
-      if () {
-        
-        
-      }
+      
     } else if (gameState == 1) {
       PVector mouse = new PVector(mouseX, mouseY, 0);
       new Asteroid(main, mouse);
