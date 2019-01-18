@@ -78,10 +78,10 @@ void keyPressed() {
   switch (powerUp) {
   case 0:
     if (key == ',') {
-    player1.shoot();
+      player1.shoot();
     }
     if (key == 'q') {
-    player2.shoot();
+      player2.shoot();
     }
     break;
   case 1:
@@ -118,6 +118,16 @@ void keyPressed() {
     }
   }
 
+  //mute functionality
+  if (key == 'm') {
+    if (muted == false) {
+      bulletSound.mute();
+      muted = true;
+    } else {
+      bulletSound.unmute();
+      muted = false;
+    }
+  }
 
   //cheat: ez money
   if (keyCode == 89) {

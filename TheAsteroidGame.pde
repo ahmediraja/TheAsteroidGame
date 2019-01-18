@@ -18,6 +18,7 @@ Ship player2;
 
 //sound variables
 AudioSample bulletSound;
+boolean muted = false;
 
 //Asteroids
 Asteroid main;
@@ -42,9 +43,6 @@ PVector player2InitPos = new PVector(600, 600);
 ArrayList<Explosion> explosions = new ArrayList<Explosion>(); //need this to hold all explosions
 PImage[] explosionImages = new PImage[8]; //holds the images of the explosion
 PVector exSize = new PVector(60, 60); //how big of an explosion
-
-float singlePlayerButtonWidth = 200;
-float singlePlayerButtonHeight = 50;
 
 //for UI
 boolean b_singlePlayerHit = false;
@@ -87,6 +85,8 @@ void init() {
   }
   imageMode(CENTER);
   startScreenAsteroid = loadImage("asteroid-icon.png");
+  
+  
 }
 
 void initPickupItems() {
@@ -160,7 +160,7 @@ void draw() {
   currentGameState();
 
   starBackground(); //stars should exist on start and end screen as well
-  //println(powerUp);
+  println(muted);
   //println(player1.health + ".........." + player2.health);
   //println(player1.sPos); //show ship position
 }

@@ -1,13 +1,3 @@
-boolean buttonHit(float rBorder, float lBorder, float tBorder, float bBorder) {
-  if (mouseX < rBorder && mouseX > lBorder && mouseY < bBorder && mouseY > tBorder) {
-    //println("yepper");
-    return true;
-  } else {
-    //println(mouseX + "........" + mouseY);
-    //println(rBorder + "....." + lBorder + "....." + bBorder + "....." + tBorder);
-    return false;
-  }
-}
 
 void startScreenUI() {
   cam.beginHUD();
@@ -15,8 +5,8 @@ void startScreenUI() {
   fill(0, 255, 255);
   textAlign(CENTER, CENTER);
   textSize(30);
-  text("Press the ENTER key to begin", width/2, height*0.3);
-  text("Press the \"i\" key to see the instructions.", width/2, height*0.75);
+  text("Press the ENTER key to begin!", width/2, height*0.75);
+  text("Press the \"i\" key to see the instructions.", width/2, height*0.3);
   image(startScreenAsteroid, width/2, height/2);
   rectMode(CENTER);
   noStroke();
@@ -24,35 +14,6 @@ void startScreenUI() {
 
 
   //key controls for this is in the controls tab
-  if (buttonHit(500, 300, 390, 340)) {
-    //mouseX > 500 && mouseX < 300 && mouseY > 390 && mouseY < 340
-    fill(b_unselectedColor);
-    b_singlePlayerHit = true; //single player
-    b_multiPlayerHit = false;
-    //println("hit a");
-  } else if (buttonHit(500, 300, 490, 440)) {
-    fill(b_unselectedColor);
-    b_singlePlayerHit = false; //multi-player
-    b_multiPlayerHit = true;
-    //println("hit b");
-  } else {
-    fill(b_unselectedColor);
-    //println("nah");
-  }
-
-  rect(width/2, height*0.45, singlePlayerButtonWidth, singlePlayerButtonHeight, 10);
-  //ellipse((width/2)+(singlePlayerButtonWidth/2), height*0.45, singlePlayerButtonHeight, singlePlayerButtonHeight);
-  //ellipse((width/2)-(singlePlayerButtonWidth/2), height*0.45, singlePlayerButtonHeight, singlePlayerButtonHeight);
-
-  rect(width/2, height*0.55, singlePlayerButtonWidth, singlePlayerButtonHeight, 10);
-
-  //ellipse((width/2)+(singlePlayerButtonWidth/2), height*0.55, singlePlayerButtonHeight, singlePlayerButtonHeight);
-  //ellipse((width/2)-(singlePlayerButtonWidth/2), height*0.55, singlePlayerButtonHeight, singlePlayerButtonHeight);
-
-  fill(0);
-  textSize(20);
-  text("Single Player", width/2, (height*0.45)-4);
-  text("CO-OP / Duos", width/2, (height*0.55)-4);
 
 
   cam.endHUD();
@@ -64,26 +25,37 @@ void drawInstructions() {
   fill(30, 144, 255);
   textAlign(LEFT);
   //player 1 display controls
-  textSize(40);
+  textSize(35);
   text("Player 1: ", 50, 100);
-  textSize(20);
-  text("Use the arrow keys to move the rocket.", 70, 140);
-  text("Use the \",\" (comma) key to shoot.", 70, 170);
+  textSize(15);
+  text("Use the ARROW KEYS to MOVE the rocket.", 70, 135);
+  text("Use the \",\" (COMMA) key to SHOOT.", 70, 165);
 
   //player 2 display controls
-  textSize(40);
-  text("Player 2: ", 50, 250);
-  textSize(20);
-  text("Use the WASD keys to move the rocket.", 70, 290);
-  text("Use the SPACE bar to shoot.", 70, 320);
-
+  textSize(35);
+  text("Player 2: ", 50, 220);
+  textSize(15);
+  text("Use the WASD keys to MOVE the rocket.", 70, 255);
+  text("Use the \"q\" key to SHOOT.", 70, 290);
+  
+  //display shop controls
+  textSize(35);
+  text("Shop Interaction:", 450, 100);
+  textSize(15);
+  text("Use the \"b\" key to toggle the shop.", 470, 135);
+  text("Further instructions are in the shop menu.", 470, 165);
+  
   //what to do in the game
   textSize(40);
-  text("The Objective:", 50, 450);
+  text("The Objective:", 50, 350);
   textSize(20);
-  text("Use your rocket to destroy the orbiting asteroids. As you destroy more \nasteroids, more spawn in, make the game harder and harder.", 70, 490);
-  text("If you shoot the center asteroid, more asteroids will spawn, making it \nmore difficult.", 70, 570);
-  text("If you choose to never shoot and just dodge, good luck getting score.", 70, 650);
+  text("When you are in the game, to begin, shoot the center asteroid!", 70, 400);
+  text("Use your rocket to destroy the orbiting asteroids. As you destroy more \nasteroids, more spawn in, make the game harder and harder!", 70, 450);
+  text("If you shoot the center asteroid, more asteroids will spawn, making it \nmore difficult for you!", 70, 520);
+  text("If you choose to never shoot and just dodge, good luck getting score!", 70, 590);
+  text("Keep in mind, when you first start, the ships are on top of one another!", 70, 630);
+  textSize(10);
+  text("CHEAT: Pressing the \"y\" key give you free money!", 70, 790);
   cam.endHUD();
 }
 
@@ -111,7 +83,10 @@ void HUD() {
   textAlign(RIGHT);
   text("Money: $" + (int)currentMoney, 600, 40);
 
-
+  if (muted) {
+    fill(255, 0, 0);
+    text("MUTED", 100, 100);
+  }
 
 
   cam.endHUD();
@@ -147,9 +122,9 @@ void shopScreen() {
   text("4:", width*0.15, height*0.6);
 
   text("Stim Shot (Increases health by 100HP) [$20]", width*0.2, height*0.3);
-  text("Bigger Bullets (Doubles the size of each bullet) [$27]", width*0.2, height*0.4);
+  text("{DOES NOT WORK} Bigger Bullets (Doubles the size of each bullet) [$27]", width*0.2, height*0.4);
   text("3 Way Shot (Shoots 3 bullets in different directions) [$30]", width*0.2, height*0.5);
-  text("Shield (Places a shield over the ship for 15 secs) [$40]", width*0.2, height*0.6);
+  text("{DOES NOT WORK} Shield (Places a shield over the ship for 15 secs) [$40]", width*0.2, height*0.6);
   cam.endHUD();
 }
 
@@ -176,13 +151,15 @@ void updateScores() {
   //}
   scores = sort(scores);
   scores = reverse(scores);
-
+  
+  /*
   print("Scores: ");
   for (int score : scores) {
     print (score);
     print(", ");
   }
   println("");
+  */
 }
 
 void endScreen() {
