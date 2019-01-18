@@ -164,9 +164,6 @@ void keyReleased() { //Better control for ship (multiple keys at once without co
 
 
 void mousePressed() {
-
-
-
   //for testing purposes
   if (mouseButton == LEFT) {
     if (gameState == 0) {

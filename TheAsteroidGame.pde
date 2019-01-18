@@ -7,18 +7,18 @@ import ddf.minim.ugens.*;
 
 import peasy.*;
 
-PeasyCam cam;
+PeasyCam cam; //declaring camera
 Minim minim;
-PImage startScreenAsteroid;
-PImage moneyImg;
+PImage startScreenAsteroid; // home page image (for looks)
+PImage moneyImg; //money pickup item symbol
 
-boolean multiplayer = true;
-Ship player1;
-Ship player2;
+boolean multiplayer = true; //always true
+Ship player1; //declare player 1 ship
+Ship player2; //declare player 2 ship
 
 //sound variables
-AudioSample bulletSound;
-boolean muted = false;
+AudioSample bulletSound; //the audio
+boolean muted = false; // used for mute functionality
 
 //Asteroids
 Asteroid main;
@@ -27,13 +27,13 @@ PShape model;
 PImage texture;
 PVector center;
 
-int gameState = 0;
-int currentScore = 0;
-int scores[] = {0, 0, 0, 0, 0};
+int gameState = 0; //determines the screen displayed
+int currentScore = 0; //score in current run of the game
+int scores[] = {0, 0, 0, 0, 0}; //stores top 5 scores
 boolean checkScore = false;
-boolean gameOver = false;
+boolean gameOver = false; // tells everything that the game is over
 
-float currentMoney = 0;
+float currentMoney = 0; //money
 
 float shipToMainDistance;
 //float ship2ToMainDistance;
@@ -129,6 +129,7 @@ void updateAsteroid() {
   }
 }
 
+//does not work for unknown reason
 /*
 void cameraZoom() {
  ship1ToMainDistance = PVector.dist(player1.sPos, main.pos);
@@ -158,9 +159,10 @@ void cameraZoom() {
 
 void draw() {
   currentGameState();
-
   starBackground(); //stars should exist on start and end screen as well
-  println(muted);
+  
+  //used for testing:
+  //println(muted);
   //println(player1.health + ".........." + player2.health);
   //println(player1.sPos); //show ship position
 }

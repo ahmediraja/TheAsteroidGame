@@ -45,6 +45,12 @@ void drawInstructions() {
   text("Use the \"b\" key to toggle the shop.", 470, 135);
   text("Further instructions are in the shop menu.", 470, 165);
   
+  //display mute controls
+  textSize(35);
+  text("To mute SFX: ", 450, 220);
+  textSize(15);
+  text("Use the \"m\" key to toggle the muting.", 470, 255);
+  
   //what to do in the game
   textSize(40);
   text("The Objective:", 50, 350);
@@ -54,7 +60,12 @@ void drawInstructions() {
   text("If you shoot the center asteroid, more asteroids will spawn, making it \nmore difficult for you!", 70, 520);
   text("If you choose to never shoot and just dodge, good luck getting score!", 70, 590);
   text("Keep in mind, when you first start, the ships are on top of one another!", 70, 630);
+  textSize(30);
+  text("REMEMBER: YOU ARE A TEAM!", 100, 690);
+  textSize(20);
+  text("Press the \"i\" key again to return to the home screen!", 70, 740);
   textSize(10);
+  text("To make the game harder, only the BLUE ship allows you to zoom out.", 70, 770);
   text("CHEAT: Pressing the \"y\" key give you free money!", 70, 790);
   cam.endHUD();
 }
@@ -122,9 +133,9 @@ void shopScreen() {
   text("4:", width*0.15, height*0.6);
 
   text("Stim Shot (Increases health by 100HP) [$20]", width*0.2, height*0.3);
-  text("{DOES NOT WORK} Bigger Bullets (Doubles the size of each bullet) [$27]", width*0.2, height*0.4);
-  text("3 Way Shot (Shoots 3 bullets in different directions) [$30]", width*0.2, height*0.5);
-  text("{DOES NOT WORK} Shield (Places a shield over the ship for 15 secs) [$40]", width*0.2, height*0.6);
+  text("{BROKEN} Bigger Bullets (Doubles the size of each bullet) [$27]", width*0.2, height*0.4);
+  text("{BROKEN} 3 Way Shot (Shoots 3 bullets in different directions) [$30]", width*0.2, height*0.5);
+  text("{BROKEN} Shield (Places a shield over the ship for 15 secs) [$40]", width*0.2, height*0.6);
   cam.endHUD();
 }
 
@@ -143,15 +154,10 @@ void updateScores() {
     }
   }
 
-  //if score is larger than smallest score in array overwrite it
-  //if (scores[0] < currentScore && !checkScore) {
-  //  scores[0] = currentScore;
-  //  scores = sort(scores);
-  //  checkScore = true;
-  //}
   scores = sort(scores);
   scores = reverse(scores);
   
+  //for testing
   /*
   print("Scores: ");
   for (int score : scores) {
@@ -162,7 +168,7 @@ void updateScores() {
   */
 }
 
-void endScreen() {
+void endScreen() { //show the end screen ui
   cam.beginHUD();
   background(255, 0, 0, 200);
   textAlign(CENTER);
@@ -172,12 +178,13 @@ void endScreen() {
   text("currentScore: " + currentScore, width/2, height*0.45);
   text("Press the ENTER key to restart", width/2, height*0.6);
 
-  if (keyPressed && keyCode == ENTER) {
+  if (keyPressed && keyCode == ENTER) { //restart game
     player1.health = width;
     player1.resetShip();
     player2.health = width;
     player2.resetShip();
     currentScore = 0;
+    currentMoney = 0;
     for (int i = 1; i < asteroids.size(); i++) {
       asteroids.remove(i);
     }

@@ -23,7 +23,7 @@ void starBackground() {
      fill(255. -(float)i/numStars*255, 255, 255);
      translate(starPos[i].x, starPos[i].y, starPos[i].z);
      sphere(random(starSize, starSize*2));
-     popMatrix(
+    popMatrix(
      */
   }
 }
