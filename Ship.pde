@@ -157,7 +157,6 @@ class Ship {
             resetShip();
             health -= (width/5);
           } else {
-            print("yes");
             health -= (width/5);
             resetShip();
             explosions.add(new Explosion(asteroids.get(i).pos, exSize, explosions, explosionImages, 5)); 
@@ -270,7 +269,7 @@ class Ship {
 
   void stimShot() {
     health += 100;
-    if (health <= 800) {
+    if (health >= 800) {
       health = 800;
     }
     powerUp = 0;
@@ -292,14 +291,19 @@ class Ship {
   }
 
   void tripleShoot() {
-    for (int i = -1; i < 2; i ++) {
-      //bullet starting position
-      bPos.add(new PVector(sPos.x, sPos.y, sPos.z));
+    startTimer = millis();
+    if (millis() - startTimer < 20000) {
+      powerUp =0;
+    } else {
+      for (int i = -1; i < 2; i ++) {
+        //bullet starting position
+        bPos.add(new PVector(sPos.x, sPos.y, sPos.z));
 
-      //bullet's velocity and direction
-      PVector v1 = new PVector(sDir.x, sDir.y, sDir.z).mult(bulletSpeed);
-      v1.rotate(PI/.1+i*50);
-      bVel.add(v1);
+        //bullet's velocity and direction
+        PVector v1 = new PVector(sDir.x, sDir.y, sDir.z).mult(bulletSpeed);
+        v1.rotate(PI/.1+i*50);
+        bVel.add(v1);
+      }
     }
     powerUp = 0;
   }

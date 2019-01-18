@@ -106,7 +106,7 @@ void HUD() {
   text("FPS: ", 30, 40);
   text(frameRate, 90, 40);
   text("Score: " + currentScore, 200, 40);
-  
+
   //money display
   textAlign(RIGHT);
   text("Money: $" + (int)currentMoney, 600, 40);
@@ -145,12 +145,44 @@ void shopScreen() {
   text("2:", width*0.15, height*0.4);
   text("3:", width*0.15, height*0.5);
   text("4:", width*0.15, height*0.6);
-  
+
   text("Stim Shot (Increases health by 100HP) [$20]", width*0.2, height*0.3);
   text("Bigger Bullets (Doubles the size of each bullet) [$27]", width*0.2, height*0.4);
   text("3 Way Shot (Shoots 3 bullets in different directions) [$30]", width*0.2, height*0.5);
   text("Shield (Places a shield over the ship for 15 secs) [$40]", width*0.2, height*0.6);
   cam.endHUD();
+}
+
+void updateScores() {
+  //scores = sort(scores);
+  boolean highEnough = false;
+  for (int score : scores) {
+    if (currentScore>score) {
+      if (!highEnough) {
+        println(currentScore +">"+ score);
+        scores[scores.length-1]=currentScore;
+        highEnough = true;
+      } else {
+        break;
+      }
+    }
+  }
+
+  //if score is larger than smallest score in array overwrite it
+  //if (scores[0] < currentScore && !checkScore) {
+  //  scores[0] = currentScore;
+  //  scores = sort(scores);
+  //  checkScore = true;
+  //}
+  scores = sort(scores);
+  scores = reverse(scores);
+
+  print("Scores: ");
+  for (int score : scores) {
+    print (score);
+    print(", ");
+  }
+  println("");
 }
 
 void endScreen() {
@@ -166,8 +198,8 @@ void endScreen() {
   if (keyPressed && keyCode == ENTER) {
     player1.health = width;
     player1.resetShip();
-    player1.health = width;
-    player1.resetShip();
+    player2.health = width;
+    player2.resetShip();
     currentScore = 0;
     for (int i = 1; i < asteroids.size(); i++) {
       asteroids.remove(i);
@@ -175,6 +207,11 @@ void endScreen() {
     gameOver = false;
     gameState = 1;
   }
+
+  for (int i = 0; i < scores.length; i++) {
+    text("Highest Score #" + (i+1) + ": " + scores[i], width/2, (height/4)*3+i*40);
+  }
+  //print(scores.toString);
 
   cam.endHUD();
 }

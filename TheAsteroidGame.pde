@@ -28,6 +28,8 @@ PVector center;
 
 int gameState = 0;
 int currentScore = 0;
+int scores[] = {0, 0, 0, 0, 0};
+boolean checkScore = false;
 boolean gameOver = false;
 
 float currentMoney = 0;
@@ -158,6 +160,7 @@ void draw() {
   currentGameState();
 
   starBackground(); //stars should exist on start and end screen as well
+  //println(powerUp);
   //println(player1.health + ".........." + player2.health);
   //println(player1.sPos); //show ship position
 }

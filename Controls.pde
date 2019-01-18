@@ -61,23 +61,55 @@ void keyPressed() {
 
   //shop controls
   if (gameState == 2) {
-    switch (powerUp) {
-    case 0:
-      
-    case 1:
-      player1.stimShot();
-      player2.stimShot();
-    case 2:
-      player1.bigBullets();
-      player2.bigBullets();
-    case 3:
-      player1.tripleShoot();
-      player2.tripleShoot();
-    case 4:
-      player1.shield();
-      player2.shield();
+    if (keyCode == 49) { //'1' key
+      powerUp = 1;
+    } else if (keyCode == 50) { //'2' key
+      println("2 has been pressed");
+      powerUp = 2;
+    } else if (keyCode == 51) { //'3' key
+      powerUp = 3;
+    } else if (keyCode == 52) { //'4' key
+      powerUp = 4;
+    } else {
+      powerUp = 0;
     }
   }
+
+  switch (powerUp) {
+  case 0:
+    if (key == ',') {
+    player1.shoot();
+    }
+    if (key == 'q') {
+    player2.shoot();
+    }
+    break;
+  case 1:
+    player1.stimShot();
+    player2.stimShot();
+    gameState = 1;
+    break;
+  case 2:
+    player1.bigBullets();
+    player2.bigBullets();
+    gameState = 1;
+    break;
+  case 3:
+    if (key == ',') {
+      player1.tripleShoot();
+    }
+    if (key == 'q') {
+      player2.tripleShoot();
+    }
+    gameState = 1;
+    break;
+  case 4:
+    player1.shield();
+    player2.shield();
+    gameState = 1;
+    break;
+  }
+
   if (key == 'b') {
     if (gameState == 1) {
       gameState = 2;
@@ -85,10 +117,10 @@ void keyPressed() {
       gameState = 1;
     }
   }
-  
-  
+
+
   //cheat: ez money
-  if(keyCode == 89) {
+  if (keyCode == 89) {
     currentMoney += 5;
     println("ez money");
   }
